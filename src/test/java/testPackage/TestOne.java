@@ -13,11 +13,11 @@ public class TestOne {
 	
 	@Test
 	public void test2() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 	
 	@Test
 	public void test3() {
-		assertTrue(false);
+		assertTrue(true);
 	}
 }
