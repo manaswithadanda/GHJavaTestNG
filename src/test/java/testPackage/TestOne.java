@@ -8,6 +8,7 @@ public class TestOne {
 	
 	@Test
 	public void test1() {
+		System.out.println("Class1: TestCase1");
 		assertTrue(true);
 	}
 	
