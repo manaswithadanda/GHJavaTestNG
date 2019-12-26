@@ -14,6 +14,7 @@ public class TestOne {
 	
 	@Test
 	public void test2() {
+		System.out.println("Class1: TestCase2");
 		assertTrue(true);
 	}
 	
