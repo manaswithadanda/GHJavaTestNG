@@ -14,7 +14,7 @@ public class TestOne {
 	
 	@Test
 	public void test2() {
-		System.out.println("Class1: TestCase2");
+		System.out.println("TC1: TC2: Branch: X");
 		assertTrue(true);
 	}
 	
