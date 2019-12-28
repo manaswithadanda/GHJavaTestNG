@@ -14,7 +14,7 @@ public class TestOne {
 	
 	@Test
 	public void test2() {
-		System.out.println("modify syso two");
+		System.out.println("modify syso 2 to 4");
 		assertTrue(true);
 	}
 	
