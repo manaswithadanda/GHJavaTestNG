@@ -14,7 +14,7 @@ public class TestOne {
 	
 	@Test
 	public void test2() {
-		System.out.println("Clone Branch & push change");
+		System.out.println("");
 		assertTrue(true);
 	}
 	
