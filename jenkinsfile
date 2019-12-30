@@ -1,0 +1,30 @@
+pipeline {
+  agent any
+  stages {
+    stage('Source') { 
+      steps {
+		// Checkout
+		checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/manaswithadanda/GHJavaTestNG.git']]])
+	}
+    }
+    
+   stage('Compile') { 
+      tools {
+        // Specify Tool Name from your global tool configuration
+		jdk 'jdk8'
+        	maven 'MavenConfiguration'
+      }
+      steps {
+		//Step
+		powershell label: '', script: 'mvn -f pom.xml clean package'
+		
+		//Publich TestNG Result
+		step([$class: 'Publisher'])
+     		
+		//Sending Email
+     		emailext body: 'MAIL BODY', subject: 'SUBJECT', to: 'manaswitha.danda@pratian.com'
+     }
+    }
+	
+  }
+}
