@@ -22,7 +22,7 @@ pipeline {
 		step([$class: 'Publisher'])
      		
 		//Sending Email
-     		emailext body: 'MAIL BODY', subject: 'SUBJECT', to: 'manaswitha.danda@pratian.com'
+     		step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'manaswitha.danda@pratian.com', sendToIndividuals: false])
      }
     }
 	
