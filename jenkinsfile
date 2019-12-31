@@ -10,10 +10,11 @@ pipeline {
 		
 		stage('Code Analysis') { 
 			steps {
-				def sonarHome = tool name: 'GTSonarQubeConfig', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-				withSonarQubeEnv('SonarSecretKey') {
-				    sh "${sonarHome}/bin/mvn sonar:sonar"
-				}
+				//def sonarHome = tool name: 'GTSonarQubeConfig', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+				//withSonarQubeEnv('SonarSecretKey') {
+				 //   sh "${sonarHome}/bin/mvn sonar:sonar"
+				//}
+				sh "/home/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqubescanner/bin/sonar-scanner -Dsonar.host.url=http://localhost:9000 -Dsonar.projectName=meanstackapp -Dsonar.projectVersion=1.0 -Dsonar.projectKey=meanstack:app -Dsonar.sources=. -Dsonar.projectBaseDir=/home/jenkins/workspace/sonarqube_test_pipeline"
 			}
 		}
     
