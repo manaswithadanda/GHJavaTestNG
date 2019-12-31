@@ -12,6 +12,7 @@ pipeline {
 			
 			environment {
 					scannerHome = tool 'GTSonarQubeScanner'
+					echo "SHOW ENV: ${scannerHome}"
 			}
 			steps {
 				//def sonarHome = tool name: 'GTSonarQubeConfig', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
