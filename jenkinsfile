@@ -11,7 +11,7 @@ pipeline {
 		stage('Code Analysis') { 
 		
 			environment {
-				def scannerHome = tool 'SonarQubeScanner'
+				def scannerHome = tool 'GTSonarQubeScanner'
 			}
 			
 			steps {
