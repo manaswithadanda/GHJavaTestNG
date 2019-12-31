@@ -11,7 +11,7 @@ pipeline {
 		stage('Code Analysis') { 
 			
 			environment {
-					scannerHome = tool 'SonarQubeScanner'
+					scannerHome = tool 'GTSonarQubeScanner'
 			}
 			steps {
 				//def sonarHome = tool name: 'GTSonarQubeConfig', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
