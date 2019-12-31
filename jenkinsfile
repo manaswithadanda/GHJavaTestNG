@@ -12,7 +12,6 @@ pipeline {
 			
 			environment {
 					scannerHome = tool 'GTSonarQubeScanner'
-					echo %scannerHome%
 			}
 			steps {
 				//def sonarHome = tool name: 'GTSonarQubeConfig', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
@@ -22,6 +21,7 @@ pipeline {
 				//sh "/Jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/GTSonarQubeConfig/bin/sonar-scanner -D sonar.host.url=http://localhost:9000 -D sonar.projectName=meanstackapp -D sonar.projectVersion=1.0 -D sonar.projectKey=meanstack:app -D sonar.sources=. -D sonar.projectBaseDir=/Jenkins/workspace/JavaTestNGPrjPipeline"
 				
 				withSonarQubeEnv('SonarQubeServer') {
+					echo %scannerHome%
 				    sh "${scannerHome}/bin/sonar-scanner"
 				}
 			}
