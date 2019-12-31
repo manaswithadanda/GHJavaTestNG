@@ -16,7 +16,7 @@ pipeline {
       }
       steps {
 		//Step
-		powershell label: '', script: 'mvn -f pom.xml clean package'
+		powershell label: '', script: 'mvn clean package'
 		
 		//Publich TestNG Result
 		step([$class: 'Publisher'])
