@@ -9,9 +9,12 @@ pipeline {
 		}
 		
 		stage('Code Analysis') { 
+		
+			environment {
+				def scannerHome = tool 'SonarQubeScanner'
+			}
 			
 			steps {
-				def scannerHome = tool 'GTSonarQubeScanner';
 				withSonarQubeEnv('SonarQubeServer') {
 				    bat "\"${scannerHome}\\bin\\sonar-scanner.bat\" -D sonar.host.url=http:\"\"localhost:9000 -D sonar.projectName=meanstackapp -D sonar.projectVersion=1.0 -D sonar.projectKey=meanstack:app -D sonar.sources=."
 				}
