@@ -5,6 +5,10 @@ pipeline {
 			steps {
 				// Checkout
 				checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/manaswithadanda/GHJavaTestNG.git']]])
+			
+				withSonarQubeEnv(credentialsId: 'SonarSecretKey') {
+				    // some block
+				}
 			}
 		}
     
