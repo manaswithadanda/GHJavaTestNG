@@ -5,14 +5,19 @@ pipeline {
 			steps {
 				// Checkout
 				checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/manaswithadanda/GHJavaTestNG.git']]])
-			
-				withSonarQubeEnv(credentialsId: 'SonarSecretKey') {
-				    // some block
+			}
+		}
+		
+		stage('Code Analysis') { 
+			steps {
+				def sonarHome = tool name: 'GTSonarQubeConfig', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+				withSonarQubeEnv('SonarSecretKey') {
+				    sh "${sonarHome}/bin/mvn sonar:sonar"
 				}
 			}
 		}
     
-	    stage('Compile') { 
+	    	stage('Compile') { 
 			tools {
 				// Specify Tool Name from your global tool configuration
 				jdk 'jdk8'
