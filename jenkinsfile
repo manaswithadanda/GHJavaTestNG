@@ -19,10 +19,10 @@ pipeline {
 				def scannerHome = tool 'GTSonarQubeScanner'
 			}
 			
-			//when {
-			//	expression { return params.SonarQube }
-			//}
-			if(params.SonarQube)
+			when {
+				expression { return params.SonarQube }
+			}
+			
 			steps {
 				
 				withSonarQubeEnv('SonarQubeServer') {
