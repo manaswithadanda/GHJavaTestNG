@@ -46,7 +46,7 @@ pipeline {
 		stage('Deploy approval') {
 			steps {
 				script {
-				       input message:'Approve deployment?'
+					def result = input(id: 'Proceed1', message: 'Deployment Approval', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: 'Deployment Approval?', name: 'Please confirm you agree with this']])
 				}
 			}
 		}
