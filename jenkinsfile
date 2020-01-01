@@ -45,11 +45,10 @@ pipeline {
 		
 		stage('Deploy approval') {
 			steps {
-				 //input message: 'Deploy Approval ', ok: 'Approve'
 				 script {
-			   		def result = input(id: 'Proceed1', message: 'Deployment Approval')
-			   		echo 'result: ' + result
-					//input message: 'Deploy Approval ', ok: 'Approve'
+			   		timeout(time:5, unit:'DAYS') {
+					    input message:'Approve deployment?', submitter: 'it-ops'
+					}
                 		}  
 			}
 		}
