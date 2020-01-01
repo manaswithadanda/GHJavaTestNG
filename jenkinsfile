@@ -44,14 +44,11 @@ pipeline {
 		}
 		
 		stage('Deploy approval') {
-			input {
-				
-				message "Should we continue?"
-              			ok "Yes, we should."
-			}
-			
 			steps {
-
+			       input {
+					message "Should we continue?"
+					ok "Yes, we should."
+				}
 			}
 		}
 	}
