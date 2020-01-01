@@ -2,7 +2,7 @@ pipeline {
     
     agent any
     parameters {
-    	booleanParam(name:'SonarQube', defaultValue: true, description: 'Run Code Analysis Test')
+    	booleanParam(name:'SonarQube', defaultValue: false, description: 'Run Code Analysis Test')
     }
     
     stages {
@@ -17,13 +17,12 @@ pipeline {
 		
 			environment {
 				def scannerHome = tool 'GTSonarQubeScanner'
-				
 			}
 			
-			when {
-				expression { return params.SonarQube }
-			}
-			
+			//when {
+			//	expression { return params.SonarQube }
+			//}
+			if(params.SonarQube)
 			steps {
 				
 				withSonarQubeEnv('SonarQubeServer') {
