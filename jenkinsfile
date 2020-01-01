@@ -44,11 +44,15 @@ pipeline {
 		}
 		
 		stage('Deploy approval') {
+			input {
+				
+				message "Should we continue?"
+              			ok "Yes, we should."
+			}
+			
 			steps {
 				 script {
-			   		timeout(time:5, unit:'SECONDS') {
-					    input message:'Approve deployment?', submitter: 'it-ops'
-					}
+	
                 		}  
 			}
 		}
