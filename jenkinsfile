@@ -53,7 +53,8 @@ pipeline {
 	}
 	post {
         	always {
-		
+			//Test Result Analyser
+			xunit thresholds: [failed(failureNewThreshold: '0', failureThreshold: '0')], tools: [UnitTest(deleteOutputFiles: true, failIfNotNew: true, pattern: '**/*.testresults', skipNoTestFiles: false, stopProcessingIfError: true)]
 			//Publich TestNG Result
 			step([$class: 'Publisher'])
             
