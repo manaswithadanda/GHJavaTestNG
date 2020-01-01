@@ -1,0 +1,56 @@
+pipeline {
+    
+    agent any
+    parameters {
+    	booleanParam(name:'SonarQube', defaultValue: false, description: 'Run Code Analysis Test')
+    }
+    
+    stages {
+		stage('Source') { 
+			steps {
+				// Checkout
+				checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/manaswithadanda/GHJavaTestNG.git']]])
+			}
+		}
+		
+		stage('Code Analysis') { 
+		
+			environment {
+				def scannerHome = tool 'GTSonarQubeScanner'
+			}
+			
+			when {
+				expression { return params.SonarQube }
+			}
+			
+			steps {
+				
+				withSonarQubeEnv('SonarQubeServer') {
+				    bat "\"${scannerHome}\\bin\\sonar-scanner.bat\" -D sonar.host.url=http:\"\"localhost:9000 -D sonar.projectName=meanstackapp -D sonar.projectVersion=1.0 -D sonar.projectKey=meanstack:app -D sonar.sources=."
+				}
+			}
+		}
+    
+	    	stage('Compile') { 
+			tools {
+				// Specify Tool Name from your global tool configuration
+				jdk 'jdk8'
+				maven 'MavenConfiguration'
+			}
+			steps {
+				//Step
+				powershell label: '', script: 'mvn clean package'
+			}
+		}
+	}
+	post {
+        always {
+		
+			//Publich TestNG Result
+			step([$class: 'Publisher'])
+            
+			//Sending Email
+     		step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'manaswitha.danda@pratian.com', sendToIndividuals: false])
+		}
+    }
+}
