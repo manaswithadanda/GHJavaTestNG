@@ -44,7 +44,11 @@ pipeline {
 		}
 		
 		stage('Deploy approval'){
-		    input "Approve"
+		    def userInput = false
+		    userInput = input(
+        id: 'Proceed1', message: 'Was this successful?', parameters: [
+        [$class: 'BooleanParameterDefinition', defaultValue: false, description: '', name: 'Please confirm you agree with this']
+        ])
 		}
 	}
 	post {
