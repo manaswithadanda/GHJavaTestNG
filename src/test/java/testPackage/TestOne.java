@@ -22,4 +22,9 @@ public class TestOne {
 	public void test3() {
 		assertTrue(true);
 	}
+	
+	@Test
+	public void test4() {
+		assertTrue(true);
+	}
 }
