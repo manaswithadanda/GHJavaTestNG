@@ -42,6 +42,10 @@ pipeline {
 				powershell label: '', script: 'mvn clean package'
 			}
 		}
+		
+		stage('Deploy approval'){
+		    input "Approve"
+		}
 	}
 	post {
         always {
