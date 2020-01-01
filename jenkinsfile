@@ -43,20 +43,24 @@ pipeline {
 			}
 		}
 		
-		stage('Deploy approval'){
+		stage('Deploy approval') {
 			steps {
-				 input message: 'Deploy Approval ', ok: 'Approve'
+				 //input message: 'Deploy Approval ', ok: 'Approve'
+				 script {
+			   		def result = input(id: 'Proceed1', message: 'Was this successful?', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: false, description: '', name: 'Please confirm you agree with this']])
+			   		echo 'result: ' + result
+                		}  
 			}
 		}
 	}
 	post {
-        always {
+        	always {
 		
 			//Publich TestNG Result
 			step([$class: 'Publisher'])
             
 			//Sending Email
-     		step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'manaswitha.danda@pratian.com', sendToIndividuals: false])
+     			step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'manaswitha.danda@pratian.com', sendToIndividuals: false])
 		}
-    }
+    	}
 }
