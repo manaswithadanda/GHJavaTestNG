@@ -49,7 +49,7 @@ pipeline {
 				 script {
 			   		def result = input(id: 'Proceed1', message: 'Deployment Approval')
 			   		echo 'result: ' + result
-					input message: 'Deploy Approval ', ok: 'Approve'
+					//input message: 'Deploy Approval ', ok: 'Approve'
                 		}  
 			}
 		}
