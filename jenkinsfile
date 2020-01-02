@@ -38,9 +38,7 @@ pipeline {
 				maven 'MavenConfiguration'
 			}
 			steps {
-				//Step
 				//powershell label: '', script: 'mvn compile -Dmaven.test.skip=true package'
-								
 				script {
 					if(params.RunTests == false) {
 						bat "mvn clean package -DskipTests"
