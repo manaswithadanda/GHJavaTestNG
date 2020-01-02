@@ -39,7 +39,7 @@ pipeline {
 			}
 			steps {
 				//Step
-				powershell label: '', script: 'mvn -Dmaven.test.skip=true package'
+				powershell label: '', script: 'mvn compile -Dmaven.test.skip=true package'
 			}
 		}
 		
