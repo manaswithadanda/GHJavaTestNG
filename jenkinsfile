@@ -42,7 +42,7 @@ pipeline {
 				//powershell label: '', script: 'mvn compile -Dmaven.test.skip=true package'
 								
 				script {
-					if(params.SkipTest == false) {
+					if(params.RunTests == false) {
 						bat "mvn clean package -DskipTests"
 					}
 					else {
