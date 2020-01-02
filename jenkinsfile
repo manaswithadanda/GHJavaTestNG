@@ -67,12 +67,10 @@ pipeline {
 			//Sending Email
      			step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'manaswitha.danda@pratian.com', sendToIndividuals: false])
 			
-			echo "Build completed. currentBuild.result = ${currentBuild.result}"
 			script {
 				if(currentBuild.result == 'UNSTABLE')
 					currentBuild.result = 'FAILURE'
 			}
-			echo "After Setting status, currentBuild.result = ${currentBuild.result}"
 		}
     	}
 }
