@@ -70,7 +70,7 @@ pipeline {
 			script {
 				def testResult = build.testResultAction
 				def total = testResult.totalCount
-				AbstractTestResultAction testResultAction =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
+				echo "TOTAL TESTS: ${total} : testResult: ${testResult}"
 				if (testResultAction != null) {
 				    echo "Tests: ${testResultAction.failCount} / ${testResultAction.failureDiffString} failures of ${testResultAction.totalCount}.\n\n" 
 				}
