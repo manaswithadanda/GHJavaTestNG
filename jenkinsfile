@@ -1,27 +1,3 @@
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import hudson.tasks.test.AbstractTestResultAction;
-
-@NonCPS 
-def getTestSummary = { -> 
-	def testResultAction = currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-    	def summary = ""
-
-	    if (testResultAction != null) {
-		def total = testResultAction.getTotalCount()
-		def failed = testResultAction.getFailCount()
-		def skipped = testResultAction.getSkipCount()
-
-		summary = "Test results:\n\t"
-		summary = summary + ("Passed: " + (total - failed - skipped))
-		summary = summary + (", Failed: " + failed + " ${testResultAction.failureDiffString}")
-		summary = summary + (", Skipped: " + skipped)
-	    } else {
-		summary = "No tests found"
-	    }
-	    return summary
-}
-
 pipeline {
     
     agent any
@@ -91,11 +67,6 @@ pipeline {
 			//Sending Email
      			step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'manaswitha.danda@pratian.com', sendToIndividuals: false])
 			
-			script {
-				def testSummaryRaw = getTestSummary()
-              			echo "TEST SUMMARY: ${testSummaryRaw}"
-			}
-
 			script {
 				if(currentBuild.result == 'UNSTABLE')
 					currentBuild.result = 'FAILURE'
