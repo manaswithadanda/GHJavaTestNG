@@ -1,3 +1,4 @@
+import hudson.model.*
 pipeline {
     
     agent any
@@ -67,14 +68,10 @@ pipeline {
 			//Sending Email
      			step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'manaswitha.danda@pratian.com', sendToIndividuals: false])
 			
-			script {
-				def testResult = build.testResultAction
-				def total = testResult.totalCount
-				echo "TOTAL TESTS: ${total} : testResult: ${testResult}"
-				if (testResultAction != null) {
-				    echo "Tests: ${testResultAction.failCount} / ${testResultAction.failureDiffString} failures of ${testResultAction.totalCount}.\n\n" 
-				}
-			}
+			def build = manager.build
+			int total = build.getTestResultAction().getTotalCount()
+			echo "TEST COUNT: ${total}"
+
 			script {
 				if(currentBuild.result == 'UNSTABLE')
 					currentBuild.result = 'FAILURE'
