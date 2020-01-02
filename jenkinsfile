@@ -66,6 +66,8 @@ pipeline {
             
 			//Sending Email
      			step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'manaswitha.danda@pratian.com', sendToIndividuals: false])
+			
+			echo "Build completed. currentBuild.result = ${currentBuild.result}"
 		}
     	}
 }
