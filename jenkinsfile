@@ -63,7 +63,7 @@ pipeline {
 			
 			//Publich TestNG Result
 			//step([$class: 'Publisher'])
-			step([$class: 'Publisher', failedFails: 60, unstableFails: 100])
+			step([$class: 'Publisher', failedFails: 3, unstableFails: 100])
             
 			//Sending Email
      			step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'manaswitha.danda@pratian.com', sendToIndividuals: false])
