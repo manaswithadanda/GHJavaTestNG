@@ -20,7 +20,7 @@ public class TestOne {
 	
 	@Test
 	public void test3() {
-		assertTrue(true);
+		assertTrue(false);
 	}
 	
 	@Test
