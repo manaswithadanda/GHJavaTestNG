@@ -54,7 +54,7 @@ pipeline {
 			steps {
 				script {
 					//def result = input(id: 'Proceed1', message: 'Deployment Approval', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']])
-					input id: 'Custid', message: 'Do u wanna proceed?', ok: 'OKCaption', submitter: 'developer', submitterParameter: 'ShouldBeSubmitterAction'
+					input id: 'Custid', message: 'Do u wanna proceed?', ok: 'OKCaption', submitter: 'projectmanager', submitterParameter: 'ShouldBeSubmitterAction'
 				}
 			}
 		}
