@@ -15,6 +15,6 @@ public class TestTwo {
 	@Test
 	public void test6() {
 		System.out.println("C2: TC6");
-		assertTrue(true);
+		assertTrue(false);
 	}
 }
