@@ -2,7 +2,7 @@ pipeline {
     
     agent any
     parameters {
-    	booleanParam(name:'SonarQube', defaultValue: false, description: 'Run Code Analysis Test')
+    	booleanParam(name:'SonarQube', defaultValue: false, description: '')
     }
     
     stages {
@@ -26,7 +26,7 @@ pipeline {
 			steps {
 				
 				withSonarQubeEnv('SonarQubeServer') {
-				    bat "\"${scannerHome}\\bin\\sonar-scanner.bat\" -D sonar.host.url=http:\"\"localhost:9000 -D sonar.projectName=meanstackapp -D sonar.projectVersion=1.0 -D sonar.projectKey=meanstack:app -D sonar.sources=."
+				    bat "\"${scannerHome}\\bin\\sonar-scanner.bat\" -D sonar.host.url=http:\"\"localhost:9000 -D sonar.projectName=meanstackapp -D sonar.projectVersion=${currentBuild.number} -D sonar.projectKey=meanstack:app -D sonar.sources=."
 				}
 			}
 		}
@@ -38,19 +38,50 @@ pipeline {
 				maven 'MavenConfiguration'
 			}
 			steps {
-				//Step
-				powershell label: '', script: 'mvn clean package'
+				//powershell label: '', script: 'mvn compile -Dmaven.test.skip=true package'
+				script {
+					if(params.RunTests == false) {
+						bat "mvn clean package -DskipTests"
+					}
+					else {
+						bat "mvn clean package"
+					}
+				}
+			}
+		}
+		
+		stage('Deploy approval') {
+			steps {
+				script {
+					//def result = input(id: 'Proceed1', message: 'Deployment Approval', parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']])
+					input id: 'Custid', message: 'Do u wanna proceed?', ok: 'OKCaption', submitter: 'projectmanager', submitterParameter: 'ShouldBeSubmitterAction'
+				}
 			}
 		}
 	}
 	post {
-        always {
-		
+        	always {
+			echo "CURRENT BUILD STATUS BEFORE PUBLISH TESTNG: ${currentBuild.result}"
 			//Publich TestNG Result
 			step([$class: 'Publisher'])
+			echo "CURRENT BUILD STATUS AFTER PUBLISH TESTNG: ${currentBuild.result}"
+			
+			//Threshold Check
+			echo "CURRENT BUILD STATUS: ${currentBuild.result}"
+			//step([$class: 'Publisher', failedFails: 60, unstableFails: 100])
+			xunit thresholds: [failed(failureNewThreshold: '0', failureThreshold: '0', unstableNewThreshold: '100', unstableThreshold: '100')], tools: [JUnit(deleteOutputFiles: true, failIfNotNew: true, pattern: '**/junitreports/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]
             
 			//Sending Email
-     		step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'manaswitha.danda@pratian.com', sendToIndividuals: false])
+     			//step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'manaswitha.danda@pratian.com', sendToIndividuals: false])
+			
+			emailext body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+Check console output at $BUILD_URL to view the results.
+${FILE, path="target/surefire-reports/emailable-report.html"}''', subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', to: 'manaswitha.danda@pratian.com'
+			
+			//script {
+			//	if(currentBuild.result == 'UNSTABLE')
+			//		currentBuild.result = 'FAILURE'
+			//}
 		}
-    }
+    	}
 }
