@@ -2,7 +2,7 @@ pipeline {
     
     agent any
     parameters {
-    	booleanParam(name:'SonarQube', defaultValue: false, description: 'Run Code Analysis Test')
+    	booleanParam(name:'SonarQube', defaultValue: false, description: '')
     }
     
     stages {
