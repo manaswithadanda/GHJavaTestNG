@@ -61,10 +61,13 @@ pipeline {
 	}
 	post {
         	always {
-			
+			echo "CURRENT BUILD STATUS BEFORE PUBLISH TESTNG: ${currentBuild.result}"
 			//Publich TestNG Result
 			step([$class: 'Publisher'])
+			echo "CURRENT BUILD STATUS AFTER PUBLISH TESTNG: ${currentBuild.result}"
+			
 			//Threshold Check
+			echo "CURRENT BUILD STATUS: ${currentBuild.result}"
 			//step([$class: 'Publisher', failedFails: 60, unstableFails: 100])
 			xunit thresholds: [failed(failureNewThreshold: '0', failureThreshold: '0', unstableNewThreshold: '100', unstableThreshold: '100')], tools: [JUnit(deleteOutputFiles: true, failIfNotNew: true, pattern: '**/junitreports/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]
             
