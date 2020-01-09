@@ -21,6 +21,7 @@ public class TestOne {
 	
 	@Test
 	public void test3() {
+		System.out.println("C1:TC3");
 		assertTrue(true);
 	}
 }
